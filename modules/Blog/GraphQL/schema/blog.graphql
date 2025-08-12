@@ -1,0 +1,74 @@
+type Article {
+    id: Int
+    title: String
+    slug: String
+    short_description: String
+    description: String
+    status: Boolean
+    image_alt: String
+    image_title: String
+    order: Int
+    views_count: Int
+    meta_title: String
+    meta_description: String
+    published_at: String
+    image: String
+    categories: [ArticleCategory]
+    latest_posts: [Article]
+    author: Author
+}
+
+type ArticleCategory {
+    id: Int
+    name: String
+    slug: String
+    status: Boolean
+    order: Int
+    meta_title: String
+    meta_description: String
+    articles: [Article]
+}
+
+type Author {
+    name: String
+    meta_title: String
+    meta_description: String
+    image_alt: String
+    image_title: String
+}
+
+type ArticleList {
+    data: [Article]
+    categories: [ArticleCategory]
+    paginatorInfo: PaginatorInfo
+}
+
+enum OrderByDirection {
+    ASC
+    DESC
+}
+
+enum ArticleSortField {
+    views_count
+    published_at
+}
+
+input ArticlesInput {
+    page: Int
+    limit: Int
+    category_slug: String
+}
+
+input AllNewsInput {
+    page: Int
+    limit: Int
+}
+
+input ArticleInput{
+    slug: String
+}
+
+extend type Query {
+    article(input: ArticleInput @spread): Article! @field(resolver: "Modules\\Blog\\GraphQL\\Queries\\Article")
+    allArticles(input: ArticlesInput @spread): ArticleList! @field(resolver: "Modules\\Blog\\GraphQL\\Queries\\Articles")
+}

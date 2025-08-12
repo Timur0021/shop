@@ -1,8 +1,6 @@
 type Bootstrap {
     text_in_site: [TextInSite]
     settings: [Setting]
-    footers: [Footer]
-    sidebars:[Sidebar]
 }
 type TextInSite {
     text: String
